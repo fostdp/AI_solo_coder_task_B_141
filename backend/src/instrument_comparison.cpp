@@ -62,8 +62,11 @@ InstrumentComparisonMetrics InstrumentComparisonEngine::computeInstrumentMetrics
 
     MaterialProperties material_props = SimulationEngine::getMaterialProperties(material);
     params.pillar_mass = 500.0;
-    params.pillar_height = 2.0;
-    params.damping_ratio = (0.05 + material_props.damping_ratio) / 2.0;
+    params.pillar_height = 1.8;
+    params.pillar_diameter = 0.12;
+    params.height_diameter_ratio = 6.0;
+    params.damping_ratio = (0.03 + material_props.damping_ratio) / 2.0;
+    params.wave_model = EarthquakeWaveModel::SIMPLE_SINE;
 
     SensitivityResult sensitivity = analyzer.analyze(params);
     metrics.heatmap = sensitivity.heatmap;
@@ -150,6 +153,8 @@ MaterialMetrics InstrumentComparisonEngine::computeMaterialMetrics(
     metrics.density_kgm3 = props.density_kgm3;
     metrics.youngs_modulus_pa = props.youngs_modulus_pa;
     metrics.damping_ratio = props.damping_ratio;
+    metrics.elastic_damping_ratio = props.elastic_damping_ratio;
+    metrics.structural_damping_ratio = props.structural_damping_ratio;
     metrics.yield_strength_pa = props.yield_strength_pa;
     metrics.cost_factor = props.cost_factor;
 
@@ -161,12 +166,15 @@ MaterialMetrics InstrumentComparisonEngine::computeMaterialMetrics(
     sim_params.distance = request.distance;
     sim_params.site_soil = request.site_soil;
     sim_params.pillar_mass = 500.0 * (props.density_kgm3 / 8960.0);
-    sim_params.pillar_height = 2.0;
-    sim_params.damping_ratio = (0.05 + props.damping_ratio) / 2.0;
+    sim_params.pillar_height = 1.8;
+    sim_params.pillar_diameter = 0.12;
+    sim_params.height_diameter_ratio = 6.0;
+    sim_params.damping_ratio = (0.03 + props.damping_ratio) / 2.0;
     sim_params.duration = request.duration;
     sim_params.dt = 0.001;
     sim_params.frequency = 1.0;
     sim_params.decay_alpha = 0.5;
+    sim_params.wave_model = EarthquakeWaveModel::SIMPLE_SINE;
     sim_params.trigger_angle_threshold = 5.0;
     sim_params.limit_angle = 8.0;
     sim_params.penalty_stiffness = 5.0e6;

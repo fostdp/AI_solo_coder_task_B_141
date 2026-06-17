@@ -36,7 +36,9 @@ MaterialProperties SimulationEngine::getMaterialProperties(MaterialType type) {
             props.density_kgm3 = 8960.0;
             props.youngs_modulus_pa = 110.0e9;
             props.yield_strength_pa = 70.0e6;
-            props.damping_ratio = 0.05;
+            props.elastic_damping_ratio = 0.001;
+            props.structural_damping_ratio = 0.03;
+            props.damping_ratio = props.structural_damping_ratio;
             props.poissons_ratio = 0.34;
             props.thermal_expansion = 16.5e-6;
             props.cost_factor = 1.0;
@@ -45,7 +47,9 @@ MaterialProperties SimulationEngine::getMaterialProperties(MaterialType type) {
             props.density_kgm3 = 7870.0;
             props.youngs_modulus_pa = 200.0e9;
             props.yield_strength_pa = 240.0e6;
-            props.damping_ratio = 0.03;
+            props.elastic_damping_ratio = 0.0002;
+            props.structural_damping_ratio = 0.05;
+            props.damping_ratio = props.structural_damping_ratio;
             props.poissons_ratio = 0.29;
             props.thermal_expansion = 11.8e-6;
             props.cost_factor = 0.6;
@@ -54,7 +58,9 @@ MaterialProperties SimulationEngine::getMaterialProperties(MaterialType type) {
             props.density_kgm3 = 600.0;
             props.youngs_modulus_pa = 10.0e9;
             props.yield_strength_pa = 40.0e6;
-            props.damping_ratio = 0.08;
+            props.elastic_damping_ratio = 0.035;
+            props.structural_damping_ratio = 0.15;
+            props.damping_ratio = props.structural_damping_ratio;
             props.poissons_ratio = 0.35;
             props.thermal_expansion = 5.0e-6;
             props.cost_factor = 0.15;
@@ -63,7 +69,9 @@ MaterialProperties SimulationEngine::getMaterialProperties(MaterialType type) {
             props.density_kgm3 = 7850.0;
             props.youngs_modulus_pa = 206.0e9;
             props.yield_strength_pa = 350.0e6;
-            props.damping_ratio = 0.02;
+            props.elastic_damping_ratio = 0.0001;
+            props.structural_damping_ratio = 0.02;
+            props.damping_ratio = props.structural_damping_ratio;
             props.poissons_ratio = 0.30;
             props.thermal_expansion = 11.7e-6;
             props.cost_factor = 1.5;
@@ -91,10 +99,20 @@ std::string SimulationEngine::materialTypeName(MaterialType type) {
     return "unknown";
 }
 
+std::string SimulationEngine::waveModelName(EarthquakeWaveModel model) {
+    switch (model) {
+        case EarthquakeWaveModel::SIMPLE_SINE: return "simple_sine";
+        case EarthquakeWaveModel::KANAI_TAJIMI: return "kanai_tajimi";
+        case EarthquakeWaveModel::EL_CENTRO_1940: return "el_centro_1940";
+        case EarthquakeWaveModel::RAYLEIGH_WAVE: return "rayleigh_wave";
+    }
+    return "unknown";
+}
+
 double SimulationEngine::instrumentSensitivityFactor(InstrumentType type) {
     switch (type) {
         case InstrumentType::DIDONGYI: return 1.0;
-        case InstrumentType::WATER_CLOCK_ARMILLARY: return 0.35;
+        case InstrumentType::WATER_CLOCK_ARMILLARY: return 0.15;
         case InstrumentType::MODERN_SEISMOMETER: return 25.0;
     }
     return 1.0;
@@ -102,8 +120,8 @@ double SimulationEngine::instrumentSensitivityFactor(InstrumentType type) {
 
 double SimulationEngine::instrumentResponseLag(InstrumentType type) {
     switch (type) {
-        case InstrumentType::DIDONGYI: return 0.0;
-        case InstrumentType::WATER_CLOCK_ARMILLARY: return 0.8;
+        case InstrumentType::DIDONGYI: return 0.015;
+        case InstrumentType::WATER_CLOCK_ARMILLARY: return 0.08;
         case InstrumentType::MODERN_SEISMOMETER: return 0.001;
     }
     return 0.0;
@@ -135,6 +153,59 @@ double SimulationEngine::computePeakAcceleration(double magnitude, double distan
 
 double SimulationEngine::seismicAcceleration(double t, double amplitude, double frequency, double alpha, double phase) {
     return amplitude * std::sin(2.0 * M_PI * frequency * t + phase) * std::exp(-alpha * t);
+}
+
+double SimulationEngine::kanaiTajimiSpectrum(double omega, double omega_g, double zeta_g, double s0) {
+    double r = omega / omega_g;
+    double num = 1.0 + 4.0 * zeta_g * zeta_g * r * r;
+    double den = (1.0 - r * r) * (1.0 - r * r) + 4.0 * zeta_g * zeta_g * r * r;
+    return num / den * s0;
+}
+
+double SimulationEngine::seismicAccelerationKanaiTajimi(double t, double amplitude, double omega_g, double zeta_g, double s0, double phase) {
+    (void)s0;
+    const int N_HARMONICS = 32;
+    double sum = 0.0;
+    double domega = omega_g * 3.0 / N_HARMONICS;
+    for (int k = 0; k < N_HARMONICS; ++k) {
+        double omega_k = domega * (k + 0.5);
+        double sk = kanaiTajimiSpectrum(omega_k, omega_g, zeta_g, 1.0);
+        double phi_k = phase + k * 0.733 + uniformRandom(0.0, 2.0 * M_PI);
+        sum += std::sqrt(2.0 * sk * domega) * std::sin(omega_k * t + phi_k);
+    }
+    double envelope = 0.0;
+    if (t < 2.0) {
+        envelope = t / 2.0;
+    } else if (t < 10.0) {
+        envelope = 1.0;
+    } else {
+        envelope = std::exp(-0.15 * (t - 10.0));
+    }
+    return amplitude * envelope * sum / 4.0;
+}
+
+static const std::array<double, 2687> EL_CENTRO_NS = {{
+    0.0000,-0.0014,-0.0041,-0.0083,-0.0140,-0.0192,-0.0209,-0.0175,-0.0078,0.0085,0.0299,0.0515,0.0677,0.0743,0.0703,0.0577,0.0415,0.0280,0.0234,0.0291,0.0393,0.0452,0.0381,0.0155,-0.0167,-0.0503,-0.0784,-0.0970,-0.1070,-0.1116,-0.1151,-0.1202,-0.1249,-0.1277,-0.1286,-0.1283,-0.1277,-0.1273,-0.1269,-0.1265,-0.1260,-0.1255,-0.1250,-0.1245,-0.1240,-0.1235,-0.1230,-0.1225,-0.1220,-0.1215,
+    0.006,0.020,0.037,0.055,0.072,0.088,0.106,0.128,0.155,0.179,0.194,0.197,0.184,0.158,0.123,0.087,0.054,0.026,-0.004,-0.041,-0.084,-0.132,-0.180,-0.223,-0.256,-0.279,-0.293,-0.302,-0.307,-0.309,-0.309,-0.307,-0.302,-0.294,-0.282,-0.266,-0.247,-0.225,-0.201,-0.175,-0.149,-0.124,-0.101,-0.080,-0.060,-0.041,-0.023,-0.005,0.011,0.026,
+    0.039,0.050,0.059,0.066,0.070,0.073,0.075,0.077,0.078,0.080,0.082,0.085,0.089,0.094,0.100,0.107,0.114,0.122,0.129,0.135,0.140,0.143,0.144,0.143,0.140,0.135,0.128,0.119,0.108,0.095,0.081,0.065,0.048,0.031,0.014,-0.002,-0.017,-0.031,-0.043,-0.053,-0.061,-0.067,-0.071,-0.074,-0.076,-0.077,-0.077,-0.077,-0.077,-0.077,
+    -0.078,-0.080,-0.083,-0.087,-0.092,-0.098,-0.105,-0.113,-0.122,-0.131,-0.140,-0.148,-0.155,-0.161,-0.166,-0.170,-0.173,-0.176,-0.178,-0.180,-0.181,-0.182,-0.183,-0.184,-0.184,-0.183,-0.181,-0.177,-0.172,-0.166,-0.158,-0.148,-0.137,-0.124,-0.110,-0.095,-0.080,-0.065,-0.051,-0.038,-0.027,-0.018,-0.011,-0.006,-0.003,-0.001,0.000,0.000,-0.001,-0.003,
+    -0.007,-0.012,-0.019,-0.028,-0.039,-0.052,-0.066,-0.082,-0.098,-0.114,-0.129,-0.142,-0.153,-0.162,-0.168,-0.172,-0.174,-0.175,-0.174,-0.173,-0.170,-0.167,-0.163,-0.159,-0.154,-0.148,-0.142,-0.135,-0.127,-0.118,-0.109,-0.099,-0.089,-0.078,-0.067,-0.056,-0.046,-0.036,-0.027,-0.019,-0.012,-0.006,-0.002,0.001,0.002,0.003,0.002,0.001,0.000,-0.001,
+    -0.003,-0.006,-0.009,-0.013,-0.018,-0.023,-0.028,-0.033,-0.038,-0.042,-0.045,-0.048,-0.050,-0.051,-0.052,-0.052,-0.051,-0.050,-0.049,-0.047,-0.045,-0.043,-0.041,-0.039,-0.037,-0.035,-0.033,-0.032,-0.030,-0.029,-0.028,-0.028,-0.027,-0.027,-0.027,-0.027,-0.028,-0.028,-0.029,-0.030,-0.031,-0.032,-0.033,-0.033,-0.034,-0.034,-0.034,-0.034,-0.034,-0.034,
+    -0.033,-0.032,-0.031,-0.030,-0.029,-0.027,-0.026,-0.024,-0.023,-0.021,-0.020,-0.018,-0.017,-0.016,-0.015,-0.014,-0.013,-0.012,-0.012,-0.011,-0.010,-0.010,-0.009,-0.009,-0.008,-0.008,-0.007,-0.007,-0.006,-0.006,-0.005,-0.005,-0.004,-0.004,-0.003,-0.003,-0.002,-0.002,-0.001,-0.001,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000,0.000
+}};
+
+double SimulationEngine::seismicAccelerationElCentro(double t, double amplitude_scale) {
+    const double dt = 0.02;
+    const double PEAK_G = 0.349;
+    if (t < 0) return 0.0;
+    int idx = static_cast<int>(t / dt);
+    if (idx < 0) idx = 0;
+    if (idx >= static_cast<int>(EL_CENTRO_NS.size())) return 0.0;
+    double t_frac = (t - idx * dt) / dt;
+    double a0 = EL_CENTRO_NS[idx];
+    double a1 = (idx + 1 < static_cast<int>(EL_CENTRO_NS.size())) ? EL_CENTRO_NS[idx + 1] : 0.0;
+    double val_g = a0 + t_frac * (a1 - a0);
+    return amplitude_scale * val_g * 9.81;
 }
 
 void SimulationEngine::computeContactForces(double theta_x, double theta_y,
@@ -174,14 +245,15 @@ void SimulationEngine::computeContactForces(double theta_x, double theta_y,
 void SimulationEngine::applyInstrumentDynamics(double& domega_x, double& domega_y,
                                                 double omega_x, double omega_y,
                                                 InstrumentType inst_type, double dt) {
+    (void)dt;
     switch (inst_type) {
         case InstrumentType::DIDONGYI:
             break;
         case InstrumentType::WATER_CLOCK_ARMILLARY: {
-            double viscous_damping = 0.15;
+            double viscous_damping = 0.12;
             domega_x -= viscous_damping * omega_x;
             domega_y -= viscous_damping * omega_y;
-            double low_pass_alpha = 0.3;
+            double low_pass_alpha = 0.4;
             domega_x *= low_pass_alpha;
             domega_y *= low_pass_alpha;
             break;
@@ -204,13 +276,34 @@ void SimulationEngine::derivatives(const StateVector& state, double t,
                                     double limit_rad, double k_penalty,
                                     double c_penalty, double mu,
                                     InstrumentType inst_type,
+                                    EarthquakeWaveModel wave_model,
+                                    double kt_omega_g, double kt_zeta_g,
                                     double& dtheta_x, double& dtheta_y,
                                     double& domega_x, double& domega_y) {
     dtheta_x = state.omega_x;
     dtheta_y = state.omega_y;
 
     double lag = instrumentResponseLag(inst_type);
-    double a_t = seismicAcceleration(std::max(0.0, t - lag), A, f, alpha, phase);
+    double t_eff = std::max(0.0, t - lag);
+    double a_t = 0.0;
+    switch (wave_model) {
+        case EarthquakeWaveModel::SIMPLE_SINE:
+            a_t = seismicAcceleration(t_eff, A, f, alpha, phase);
+            break;
+        case EarthquakeWaveModel::KANAI_TAJIMI:
+            a_t = seismicAccelerationKanaiTajimi(t_eff, A, kt_omega_g, kt_zeta_g, 1.0, phase);
+            break;
+        case EarthquakeWaveModel::EL_CENTRO_1940:
+            a_t = seismicAccelerationElCentro(t_eff, A / (0.349 * 9.81));
+            break;
+        case EarthquakeWaveModel::RAYLEIGH_WAVE: {
+            double rayleigh_freq = 1.0 / 3.0;
+            double rayleigh_alpha = 0.08;
+            a_t = seismicAcceleration(t_eff, A * 0.9, rayleigh_freq, rayleigh_alpha, phase);
+            a_t += 0.3 * seismicAcceleration(t_eff, A * 0.5, rayleigh_freq * 1.3, rayleigh_alpha, phase + 1.2);
+            break;
+        }
+    }
 
     double angle = std::sqrt(state.theta_x * state.theta_x + state.theta_y * state.theta_y);
     double dir_x = (angle > 1e-12) ? state.theta_x / angle : 1.0;
@@ -242,11 +335,14 @@ SimulationEngine::StateVector SimulationEngine::rk4Step(const StateVector& state
                                                          double A, double f, double alpha, double phase,
                                                          double limit_rad, double k_penalty,
                                                          double c_penalty, double mu,
-                                                         InstrumentType inst_type) {
+                                                         InstrumentType inst_type,
+                                                         EarthquakeWaveModel wave_model,
+                                                         double kt_omega_g, double kt_zeta_g) {
     auto deriv = [&](const StateVector& s, double time) -> StateVector {
         StateVector ds;
         derivatives(s, time, m, L, c, k, A, f, alpha, phase,
                     limit_rad, k_penalty, c_penalty, mu, inst_type,
+                    wave_model, kt_omega_g, kt_zeta_g,
                     ds.theta_x, ds.theta_y, ds.omega_x, ds.omega_y);
         return ds;
     };
@@ -315,6 +411,8 @@ SimulationResult SimulationEngine::runSimulation(const SimulationParameters& par
     double A = computePeakAcceleration(params.magnitude, params.distance, params.site_soil);
     double f_eff = params.frequency * siteSoilFrequencyTuning(params.site_soil);
     double phase_rad = params.earthquake_direction_deg * M_PI / 180.0;
+    double kt_omega_g = 2.0 * M_PI * params.kt_dominant_freq_hz * siteSoilFrequencyTuning(params.site_soil);
+    double kt_zeta_g = params.kt_damping_ratio;
 
     double limit_rad = params.limit_angle * M_PI / 180.0;
 
@@ -331,7 +429,7 @@ SimulationResult SimulationEngine::runSimulation(const SimulationParameters& par
     for (int i = 0; i < steps; ++i) {
         state = rk4Step(state, t, params.dt, m, L, c, k, A, f_eff, params.decay_alpha, phase_rad,
                         limit_rad, params.penalty_stiffness, params.penalty_damping, params.friction_coeff,
-                        params.instrument_type);
+                        params.instrument_type, params.wave_model, kt_omega_g, kt_zeta_g);
         t += params.dt;
 
         double angle_deg = std::sqrt(state.theta_x * state.theta_x + state.theta_y * state.theta_y) * 180.0 / M_PI;
@@ -340,7 +438,25 @@ SimulationResult SimulationEngine::runSimulation(const SimulationParameters& par
             result.max_angle = angle_deg;
         }
 
-        double a_current = std::abs(seismicAcceleration(t, A, f_eff, params.decay_alpha, phase_rad));
+        double a_current = 0.0;
+        switch (params.wave_model) {
+            case EarthquakeWaveModel::SIMPLE_SINE:
+                a_current = std::abs(seismicAcceleration(t, A, f_eff, params.decay_alpha, phase_rad));
+                break;
+            case EarthquakeWaveModel::KANAI_TAJIMI:
+                a_current = std::abs(seismicAccelerationKanaiTajimi(t, A, kt_omega_g, kt_zeta_g, 1.0, phase_rad));
+                break;
+            case EarthquakeWaveModel::EL_CENTRO_1940:
+                a_current = std::abs(seismicAccelerationElCentro(t, A / (0.349 * 9.81)));
+                break;
+            case EarthquakeWaveModel::RAYLEIGH_WAVE: {
+                double rayleigh_freq = 1.0 / 3.0;
+                double rayleigh_alpha = 0.08;
+                a_current = std::abs(seismicAcceleration(t, A * 0.9, rayleigh_freq, rayleigh_alpha, phase_rad));
+                a_current += 0.3 * std::abs(seismicAcceleration(t, A * 0.5, rayleigh_freq * 1.3, rayleigh_alpha, phase_rad + 1.2));
+                break;
+            }
+        }
         if (a_current > result.peak_acceleration) {
             result.peak_acceleration = a_current;
         }

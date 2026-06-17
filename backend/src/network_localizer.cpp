@@ -7,6 +7,42 @@
 double deg2rad(double deg) { return deg * M_PI / 180.0; }
 double rad2deg(double rad) { return rad * 180.0 / M_PI; }
 
+std::string NetworkLocalizer::protocolName(TimeSyncProtocol proto) {
+    switch (proto) {
+        case TimeSyncProtocol::NONE: return "none";
+        case TimeSyncProtocol::NTP_LAN: return "ntp_lan";
+        case TimeSyncProtocol::NTP_WAN: return "ntp_wan";
+        case TimeSyncProtocol::PTP_IEEE1588: return "ptp_ieee1588";
+        case TimeSyncProtocol::GPS_TIMING: return "gps_timing";
+        case TimeSyncProtocol::RUBIDIUM_CLOCK: return "rubidium_clock";
+    }
+    return "unknown";
+}
+
+double NetworkLocalizer::protocolTimeUncertaintySec(TimeSyncProtocol proto) {
+    switch (proto) {
+        case TimeSyncProtocol::NONE: return 1.0;
+        case TimeSyncProtocol::NTP_LAN: return 0.001;
+        case TimeSyncProtocol::NTP_WAN: return 0.010;
+        case TimeSyncProtocol::PTP_IEEE1588: return 0.0001;
+        case TimeSyncProtocol::GPS_TIMING: return 0.000001;
+        case TimeSyncProtocol::RUBIDIUM_CLOCK: return 0.0000001;
+    }
+    return 0.1;
+}
+
+double NetworkLocalizer::computeClockDriftErrorSec(const StationClock& clock, double elapsed_sec) {
+    double drift_error = clock.drift_rate_ppm * 1.0e-6 * elapsed_sec;
+    double sync_error = protocolTimeUncertaintySec(clock.sync_protocol);
+    return std::sqrt(drift_error * drift_error + sync_error * sync_error);
+}
+
+double NetworkLocalizer::clockTimeToTrue(double clock_time_sec, const StationClock& clock) {
+    double rho = clock.drift_rate_ppm * 1.0e-6;
+    double elapsed = clock_time_sec - clock.last_sync_time_sec;
+    return clock.initial_offset_sec + (1.0 + rho) * elapsed + clock.last_sync_time_sec;
+}
+
 double NetworkLocalizer::haversineDistanceKm(double lat1_deg, double lon1_deg,
                                              double lat2_deg, double lon2_deg) {
     double dlat = deg2rad(lat2_deg - lat1_deg);
@@ -247,23 +283,44 @@ LocalizationResult NetworkLocalizer::runTDOA(
         return result;
     }
 
+    std::vector<StationReading> corrected_readings;
+    double total_time_uncertainty_sec = 0.0;
+    for (const auto& r : readings) {
+        StationReading cr = r;
+        auto it = std::find_if(stations.begin(), stations.end(),
+            [&](const StationConfig& s) { return s.device_id == r.device_id; });
+        if (it != stations.end()) {
+            cr.trigger_time_sec = clockTimeToTrue(r.trigger_time_sec, it->clock);
+            double elapsed = r.trigger_time_sec - it->clock.last_sync_time_sec;
+            total_time_uncertainty_sec += computeClockDriftErrorSec(it->clock, elapsed);
+            result.valid_stations++;
+        }
+        corrected_readings.push_back(cr);
+    }
+    if (result.valid_stations > 0) {
+        total_time_uncertainty_sec /= result.valid_stations;
+    }
+
     std::vector<double> sorted_times;
-    for (const auto& r : readings) sorted_times.push_back(r.trigger_time_sec);
+    for (const auto& r : corrected_readings) sorted_times.push_back(r.trigger_time_sec);
     std::sort(sorted_times.begin(), sorted_times.end());
     double t0 = sorted_times[0];
 
     double lat0 = 0, lon0 = 0;
-    for (const auto& reading : readings) {
+    int centroid_count = 0;
+    for (const auto& reading : corrected_readings) {
         auto it = std::find_if(stations.begin(), stations.end(),
             [&](const StationConfig& s) { return s.device_id == reading.device_id; });
         if (it != stations.end()) {
             lat0 += it->latitude_deg;
             lon0 += it->longitude_deg;
-            result.valid_stations++;
+            centroid_count++;
         }
     }
-    lat0 /= result.valid_stations;
-    lon0 /= result.valid_stations;
+    if (centroid_count > 0) {
+        lat0 /= centroid_count;
+        lon0 /= centroid_count;
+    }
 
     double best_lat = lat0, best_lon = lon0;
     double best_error = 1e12;
@@ -272,17 +329,17 @@ LocalizationResult NetworkLocalizer::runTDOA(
         double total_error = 0;
         double grad_lat = 0, grad_lon = 0;
 
-        for (size_t i = 1; i < readings.size(); i++) {
+        for (size_t i = 1; i < corrected_readings.size(); i++) {
             auto it_i = std::find_if(stations.begin(), stations.end(),
-                [&](const StationConfig& s) { return s.device_id == readings[i].device_id; });
+                [&](const StationConfig& s) { return s.device_id == corrected_readings[i].device_id; });
             auto it_0 = std::find_if(stations.begin(), stations.end(),
-                [&](const StationConfig& s) { return s.device_id == readings[0].device_id; });
+                [&](const StationConfig& s) { return s.device_id == corrected_readings[0].device_id; });
             if (it_i == stations.end() || it_0 == stations.end()) continue;
 
             double d_i = haversineDistanceKm(it_i->latitude_deg, it_i->longitude_deg, best_lat, best_lon);
             double d_0 = haversineDistanceKm(it_0->latitude_deg, it_0->longitude_deg, best_lat, best_lon);
             double delta_t_pred = (d_i - d_0) / wave_velocity_km_sec;
-            double delta_t_meas = readings[i].trigger_time_sec - readings[0].trigger_time_sec;
+            double delta_t_meas = corrected_readings[i].trigger_time_sec - corrected_readings[0].trigger_time_sec;
             double error = delta_t_pred - delta_t_meas;
 
             total_error += error * error;
@@ -316,16 +373,20 @@ LocalizationResult NetworkLocalizer::runTDOA(
 
     result.best_estimate.latitude_deg = best_lat;
     result.best_estimate.longitude_deg = best_lon;
-    result.best_estimate.uncertainty_km = std::sqrt(best_error / std::max(1, result.valid_stations - 2))
-                                          * wave_velocity_km_sec * 10;
+    double tdoa_residual_km = std::sqrt(best_error / std::max(1, result.valid_stations - 2))
+                               * wave_velocity_km_sec;
+    double time_sync_error_km = total_time_uncertainty_sec * wave_velocity_km_sec;
+    result.best_estimate.uncertainty_km = std::sqrt(tdoa_residual_km * tdoa_residual_km
+                                                    + time_sync_error_km * time_sync_error_km) * 3.0;
     result.best_estimate.confidence = std::min(0.9, std::max(0.2, 1.0 - result.best_estimate.uncertainty_km / 80.0));
     result.best_estimate.method = "tdoa";
     result.converged = true;
     result.residual_mean = std::sqrt(best_error / std::max(1, result.valid_stations));
-    result.residual_std = result.residual_mean * 0.5;
+    result.residual_std = std::sqrt(result.residual_mean * result.residual_mean
+                                    + total_time_uncertainty_sec * total_time_uncertainty_sec);
 
     double total_amp = 0;
-    for (const auto& r : readings) total_amp += r.peak_acceleration;
+    for (const auto& r : corrected_readings) total_amp += r.peak_acceleration;
     if (result.valid_stations > 0) {
         result.best_estimate.estimated_magnitude = std::log10(total_amp / result.valid_stations * 1e6) * 0.7 + 3.0;
     }

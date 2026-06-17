@@ -1,10 +1,15 @@
 {
   "pillar": {
     "mass_kg": 500,
-    "height_m": 2.0,
-    "damping_ratio": 0.05,
+    "height_m": 1.8,
+    "diameter_m": 0.12,
+    "height_diameter_ratio": 6.0,
+    "natural_period_sec": 1.8,
+    "damping_ratio": 0.03,
     "limit_angle_deg": 8.0,
-    "trigger_angle_deg": 5.0
+    "trigger_angle_deg": 5.0,
+    "detection_threshold_gal": 1.8,
+    "reference": "Feng Rui 2005 restoration model, suspended pendulum principle, Houfeng Didongyi AD 132"
   },
   "contact": {
     "penalty_stiffness": 5000000,
@@ -38,59 +43,81 @@
       "density_kgm3": 8960,
       "youngs_modulus_pa": 110000000000,
       "yield_strength_pa": 70000000,
-      "damping_ratio": 0.05,
+      "damping_ratio": 0.03,
+      "elastic_damping_ratio": 0.001,
+      "structural_damping_ratio": 0.03,
       "poissons_ratio": 0.34,
       "thermal_expansion": 0.0000165,
       "cost_factor": 1.0,
-      "description": "青铜合金，张衡地动仪原材"
+      "description": "Bronze alloy, Zhangheng Didongyi material, elastic damping 1e-3, structural 0.02-0.04",
+      "reference": "Experimental metal damping data: polycrystalline copper ~1e-3, joined structures 0.02-0.04"
     },
     "iron": {
-      "density_kgm3": 7850,
+      "density_kgm3": 7870,
       "youngs_modulus_pa": 200000000000,
       "yield_strength_pa": 240000000,
-      "damping_ratio": 0.02,
+      "damping_ratio": 0.05,
+      "elastic_damping_ratio": 0.0002,
+      "structural_damping_ratio": 0.05,
       "poissons_ratio": 0.29,
       "thermal_expansion": 0.0000118,
       "cost_factor": 0.4,
-      "description": "熟铁/锻铁，强度较高"
+      "description": "Wrought iron, higher strength, elastic damping 1-3e-4, joined structures 0.03-0.07",
+      "reference": "Experimental iron damping: pure Fe 1-3e-4, bolted/riveted structures 0.03-0.07"
     },
     "wood": {
-      "density_kgm3": 750,
-      "youngs_modulus_pa": 12000000000,
-      "yield_strength_pa": 50000000,
-      "damping_ratio": 0.08,
+      "density_kgm3": 600,
+      "youngs_modulus_pa": 10000000000,
+      "yield_strength_pa": 40000000,
+      "damping_ratio": 0.15,
+      "elastic_damping_ratio": 0.035,
+      "joint_damping_ratio": 0.15,
       "poissons_ratio": 0.35,
       "thermal_expansion": 0.000005,
       "cost_factor": 0.08,
-      "description": "硬木（橡木/楠木），阻尼特性优异"
+      "description": "Hardwood (oak/nanmu), linear elastic 0.03-0.04, joint plastic 0.08-0.22",
+      "reference": "Timber structure damping: GLT joints 0.08-0.22, elastic range 0.03-0.04"
     },
     "steel": {
       "density_kgm3": 7850,
       "youngs_modulus_pa": 206000000000,
       "yield_strength_pa": 350000000,
-      "damping_ratio": 0.005,
+      "damping_ratio": 0.02,
+      "elastic_damping_ratio": 0.0001,
+      "structural_damping_ratio": 0.02,
       "poissons_ratio": 0.30,
       "thermal_expansion": 0.0000115,
       "cost_factor": 0.6,
-      "description": "现代结构钢材，高强度低阻尼"
+      "description": "Modern structural steel, high strength low damping, welded 0.01-0.02, bolted 0.03-0.05",
+      "reference": "Steel damping: elastic <0.01%, continuous welded 0.01-0.02, bolted joints 0.03-0.05"
     }
   },
   "instruments": {
     "didongyi": {
       "sensitivity_factor": 1.0,
       "response_lag_ms": 15,
-      "noise_floor_gal": 0.1,
-      "min_trigger_gal": 1.0,
-      "damping_override": 0.05,
-      "description": "东汉张衡候风地动仪，纯机械倒立摆"
+      "noise_floor_gal": 0.5,
+      "min_trigger_gal": 1.8,
+      "damping_override": 0.03,
+      "natural_period_sec": 1.8,
+      "pillar_height_m": 1.8,
+      "pillar_diameter_m": 0.12,
+      "height_diameter_ratio": 6.0,
+      "description": "Zhangheng Houfeng Didongyi (AD 132), Feng Rui 2005 restoration, suspended pendulum, 1.8m tall pillar φ12cm, T0=1.67-2s",
+      "reference": "Feng Rui et al., 'The scientific reconstruction of Zhangheng's seismoscope', 2005, Acta Seismologica Sinica; Longxi earthquake AD 138, ~499km epicentral distance, threshold ~1.8gal"
     },
     "water_clock_armillary": {
-      "sensitivity_factor": 0.35,
+      "sensitivity_factor": 0.15,
       "response_lag_ms": 80,
-      "noise_floor_gal": 0.5,
-      "min_trigger_gal": 8.0,
-      "damping_override": 0.15,
-      "description": "北宋苏颂水运仪象台，含大型水轮阻尼"
+      "noise_floor_gal": 2.0,
+      "min_trigger_gal": 15.0,
+      "damping_override": 0.12,
+      "structure_height_m": 12.0,
+      "structure_width_m": 7.0,
+      "copper_mass_kg": 10000,
+      "clock_daily_error_sec": 20.0,
+      "description": "Su Song Water-powered Armillary Sphere Tower (AD 1088), astronomical clock NOT seismometer, 12m tall, 7m wide, 20000jin copper, Tianheng escapement",
+      "reference": 'Su Song "Xin Yi Xiang Fa Yao" AD 1092; not a dedicated seismic instrument, massive copper-wood structure responds to strong shaking only'
     },
     "modern_seismometer": {
       "sensitivity_factor": 25.0,
@@ -98,7 +125,38 @@
       "noise_floor_gal": 0.001,
       "min_trigger_gal": 0.01,
       "damping_override": 0.005,
-      "description": "现代电子宽带地震仪，带前置放大"
+      "frequency_band_hz": [0.01, 50.0],
+      "description": "Modern broadband electronic seismometer with pre-amplification, typical observatory grade",
+      "reference": "USGS/IRIS GS-13 or Streckeisen STS-2 class broadband seismometer"
     }
+  },
+  "time_sync": {
+    "model": "linear_clock_drift",
+    "clock_drift_ppm_default": 20.0,
+    "clock_offset_sec_default": 0.001,
+    "ntp_lan_ms": 1.0,
+    "ntp_wan_ms": 10.0,
+    "ptp_lan_us": 100.0,
+    "gps_us": 1.0,
+    "reference": "IEEE 1588 PTP, NTP RFC 5905, typical crystal oscillator ±20ppm = ~1.7s/day drift"
+  },
+  "earthquake_wave": {
+    "default_model": "kanai_tajimi",
+    "kanai_tajimi": {
+      "dominant_freq_hz": 1.5,
+      "damping_ratio": 0.6,
+      "intensity_s0": 1.0
+    },
+    "el_centro_1940": {
+      "peak_acceleration_g": 0.349,
+      "duration_sec": 53.72,
+      "time_step_sec": 0.02,
+      "component": "NS"
+    },
+    "rayleigh_wave": {
+      "period_range_sec": [2.0, 5.0],
+      "velocity_km_sec": 3.0
+    },
+    "reference": "Kanai-Tajimi power spectral density model; El Centro Imperial Valley 1940 M6.9, first complete strong-motion record"
   }
 }

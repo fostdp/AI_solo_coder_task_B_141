@@ -5,13 +5,30 @@
 #include <array>
 #include <cmath>
 
+enum class TimeSyncProtocol {
+    NONE = 0,
+    NTP_LAN = 1,
+    NTP_WAN = 2,
+    PTP_IEEE1588 = 3,
+    GPS_TIMING = 4,
+    RUBIDIUM_CLOCK = 5
+};
+
+struct StationClock {
+    double drift_rate_ppm = 20.0;
+    double initial_offset_sec = 0.001;
+    double last_sync_time_sec = 0.0;
+    TimeSyncProtocol sync_protocol = TimeSyncProtocol::NTP_LAN;
+};
+
 struct StationConfig {
     std::string device_id;
     double latitude_deg;
     double longitude_deg;
     double elevation_m;
-    double time_uncertainty_sec = 0.1;
+    double time_uncertainty_sec = 0.001;
     double azimuth_uncertainty_deg = 10.0;
+    StationClock clock;
 };
 
 struct StationReading {
@@ -69,6 +86,11 @@ public:
                                  double lat2_deg, double lon2_deg);
 
     static double azimuthToDegrees(int dragon_index);
+
+    static double clockTimeToTrue(double clock_time_sec, const StationClock& clock);
+    static double protocolTimeUncertaintySec(TimeSyncProtocol proto);
+    static double computeClockDriftErrorSec(const StationClock& clock, double elapsed_sec);
+    static std::string protocolName(TimeSyncProtocol proto);
 
 private:
     static constexpr double EARTH_RADIUS_KM = 6371.0;

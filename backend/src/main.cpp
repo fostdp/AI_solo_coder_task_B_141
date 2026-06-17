@@ -590,6 +590,8 @@ int main() {
                 {"youngs_modulus_pa", props.youngs_modulus_pa},
                 {"yield_strength_pa", props.yield_strength_pa},
                 {"damping_ratio", props.damping_ratio},
+                {"elastic_damping_ratio", props.elastic_damping_ratio},
+                {"structural_damping_ratio", props.structural_damping_ratio},
                 {"poissons_ratio", props.poissons_ratio},
                 {"thermal_expansion", props.thermal_expansion},
                 {"cost_factor", props.cost_factor}
@@ -742,6 +744,8 @@ int main() {
                 m["density_kgm3"] = mm.density_kgm3;
                 m["youngs_modulus_pa"] = mm.youngs_modulus_pa;
                 m["damping_ratio"] = mm.damping_ratio;
+                m["elastic_damping_ratio"] = mm.elastic_damping_ratio;
+                m["structural_damping_ratio"] = mm.structural_damping_ratio;
                 m["yield_strength_pa"] = mm.yield_strength_pa;
                 m["cost_factor"] = mm.cost_factor;
                 m["avg_trigger_time_sec"] = mm.avg_trigger_time_sec;
@@ -782,8 +786,21 @@ int main() {
                     sc.latitude_deg = s.value("latitude_deg", 0.0);
                     sc.longitude_deg = s.value("longitude_deg", 0.0);
                     sc.elevation_m = s.value("elevation_m", 0.0);
-                    sc.time_uncertainty_sec = s.value("time_uncertainty_sec", 0.1);
+                    sc.time_uncertainty_sec = s.value("time_uncertainty_sec", 0.001);
                     sc.azimuth_uncertainty_deg = s.value("azimuth_uncertainty_deg", 10.0);
+
+                    std::string proto = s.value("sync_protocol", "ntp_lan");
+                    if (proto == "none") sc.clock.sync_protocol = TimeSyncProtocol::NONE;
+                    else if (proto == "ntp_lan") sc.clock.sync_protocol = TimeSyncProtocol::NTP_LAN;
+                    else if (proto == "ntp_wan") sc.clock.sync_protocol = TimeSyncProtocol::NTP_WAN;
+                    else if (proto == "ptp" || proto == "ptp_ieee1588") sc.clock.sync_protocol = TimeSyncProtocol::PTP_IEEE1588;
+                    else if (proto == "gps") sc.clock.sync_protocol = TimeSyncProtocol::GPS_TIMING;
+                    else if (proto == "rubidium") sc.clock.sync_protocol = TimeSyncProtocol::RUBIDIUM_CLOCK;
+                    else sc.clock.sync_protocol = TimeSyncProtocol::NTP_LAN;
+
+                    sc.clock.drift_rate_ppm = s.value("drift_rate_ppm", 20.0);
+                    sc.clock.initial_offset_sec = s.value("initial_offset_sec", 0.001);
+                    sc.clock.last_sync_time_sec = s.value("last_sync_time_sec", 0.0);
                     stations.push_back(sc);
                 }
             }

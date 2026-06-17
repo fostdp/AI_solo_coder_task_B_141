@@ -66,6 +66,8 @@ struct MaterialMetrics {
     double density_kgm3;
     double youngs_modulus_pa;
     double damping_ratio;
+    double elastic_damping_ratio;
+    double structural_damping_ratio;
     double yield_strength_pa;
     double cost_factor;
     double avg_trigger_time_sec;

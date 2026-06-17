@@ -19,21 +19,39 @@ protected:
 
     static constexpr double WAVE_VELOCITY = 6.0;
 
+    static StationConfig makeStation(const std::string& id, double lat, double lon, double elev,
+                                     double time_unc = 0.001, double az_unc = 10.0,
+                                     TimeSyncProtocol proto = TimeSyncProtocol::NTP_LAN,
+                                     double drift_ppm = 20.0) {
+        StationConfig s;
+        s.device_id = id;
+        s.latitude_deg = lat;
+        s.longitude_deg = lon;
+        s.elevation_m = elev;
+        s.time_uncertainty_sec = time_unc;
+        s.azimuth_uncertainty_deg = az_unc;
+        s.clock.sync_protocol = proto;
+        s.clock.drift_rate_ppm = drift_ppm;
+        s.clock.initial_offset_sec = 0.001;
+        s.clock.last_sync_time_sec = 0.0;
+        return s;
+    }
+
     static std::vector<StationConfig> getChinaStations() {
         return {
-            {"DDY-BJ", 39.9042, 116.4074, 43.5, 0.1, 10.0},
-            {"DDY-SH", 31.2304, 121.4737, 4.0, 0.1, 10.0},
-            {"DDY-GZ", 23.1291, 113.2644, 11.0, 0.1, 10.0},
-            {"DDY-CD", 30.5728, 104.0668, 500.0, 0.1, 10.0},
-            {"DDY-XA", 34.3416, 108.9398, 415.0, 0.1, 10.0}
+            makeStation("DDY-BJ", 39.9042, 116.4074, 43.5),
+            makeStation("DDY-SH", 31.2304, 121.4737, 4.0),
+            makeStation("DDY-GZ", 23.1291, 113.2644, 11.0),
+            makeStation("DDY-CD", 30.5728, 104.0668, 500.0),
+            makeStation("DDY-XA", 34.3416, 108.9398, 415.0)
         };
     }
 
     static std::vector<StationConfig> getCollinearStations() {
         return {
-            {"DDY-BJ", 39.9042, 116.4074, 43.5, 0.1, 10.0},
-            {"DDY-TJ", 39.0842, 117.2009, 10.0, 0.1, 10.0},
-            {"DDY-JN", 36.6512, 117.1201, 50.0, 0.1, 10.0}
+            makeStation("DDY-BJ", 39.9042, 116.4074, 43.5),
+            makeStation("DDY-TJ", 39.0842, 117.2009, 10.0),
+            makeStation("DDY-JN", 36.6512, 117.1201, 50.0)
         };
     }
 

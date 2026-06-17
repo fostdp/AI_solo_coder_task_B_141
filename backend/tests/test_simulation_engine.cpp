@@ -61,8 +61,8 @@ TEST_F(TestSimulationEngine, Normal_MaterialPropertiesDensity) {
     MaterialProperties steel = SimulationEngine::getMaterialProperties(MaterialType::STEEL);
 
     EXPECT_NEAR(copper.density_kgm3, 8960.0, LOOSE_TOLERANCE * 8960.0) << "COPPER 密度";
-    EXPECT_NEAR(iron.density_kgm3, 7850.0, LOOSE_TOLERANCE * 7850.0) << "IRON 密度";
-    EXPECT_NEAR(wood.density_kgm3, 750.0, LOOSE_TOLERANCE * 750.0) << "WOOD 密度";
+    EXPECT_NEAR(iron.density_kgm3, 7870.0, LOOSE_TOLERANCE * 7870.0) << "IRON 密度";
+    EXPECT_NEAR(wood.density_kgm3, 600.0, LOOSE_TOLERANCE * 600.0) << "WOOD 密度";
     EXPECT_NEAR(steel.density_kgm3, 7850.0, LOOSE_TOLERANCE * 7850.0) << "STEEL 密度";
 }
 
@@ -72,7 +72,7 @@ TEST_F(TestSimulationEngine, Normal_InstrumentSensitivityFactor) {
     double modern = SimulationEngine::instrumentSensitivityFactor(InstrumentType::MODERN_SEISMOMETER);
 
     EXPECT_NEAR(didongyi, 1.0, TOLERANCE) << "DIDONGYI 灵敏度因子";
-    EXPECT_NEAR(water, 0.35, TOLERANCE) << "WATER_CLOCK_ARMILLARY 灵敏度因子";
+    EXPECT_NEAR(water, 0.15, TOLERANCE) << "WATER_CLOCK_ARMILLARY 灵敏度因子";
     EXPECT_NEAR(modern, 25.0, TOLERANCE) << "MODERN_SEISMOMETER 灵敏度因子";
 }
 

@@ -32,8 +32,10 @@ protected:
         defaultParams.duration = 30.0;
         defaultParams.dt = 0.001;
         defaultParams.pillar_mass = 500.0;
-        defaultParams.pillar_height = 2.0;
-        defaultParams.damping_ratio = 0.05;
+        defaultParams.pillar_height = 1.8;
+        defaultParams.pillar_diameter = 0.12;
+        defaultParams.height_diameter_ratio = 6.0;
+        defaultParams.damping_ratio = 0.03;
         defaultParams.trigger_angle_threshold = 5.0;
         defaultParams.site_soil = SiteSoilType::II;
         defaultParams.instrument_type = InstrumentType::DIDONGYI;
@@ -41,6 +43,7 @@ protected:
         defaultParams.earthquake_direction_deg = 0.0;
         defaultParams.noise_level = 0.001;
         defaultParams.instrument_sensitivity = 1.0;
+        defaultParams.wave_model = EarthquakeWaveModel::SIMPLE_SINE;
 
         sensitivityParams.magnitude_min = 2.0;
         sensitivityParams.magnitude_max = 8.0;
@@ -117,8 +120,12 @@ inline std::vector<StationConfig> generateTestStations(int count = 5) {
         station.latitude_deg = coords[i][0];
         station.longitude_deg = coords[i][1];
         station.elevation_m = coords[i][2];
-        station.time_uncertainty_sec = 0.1;
+        station.time_uncertainty_sec = 0.001;
         station.azimuth_uncertainty_deg = 10.0;
+        station.clock.sync_protocol = TimeSyncProtocol::NTP_LAN;
+        station.clock.drift_rate_ppm = 20.0;
+        station.clock.initial_offset_sec = 0.001;
+        station.clock.last_sync_time_sec = 0.0;
         stations.push_back(station);
     }
 
@@ -132,8 +139,10 @@ inline SimulationParameters generateTestParameters() {
     params.duration = 30.0;
     params.dt = 0.001;
     params.pillar_mass = 500.0;
-    params.pillar_height = 2.0;
-    params.damping_ratio = 0.05;
+    params.pillar_height = 1.8;
+    params.pillar_diameter = 0.12;
+    params.height_diameter_ratio = 6.0;
+    params.damping_ratio = 0.03;
     params.trigger_angle_threshold = 5.0;
     params.limit_angle = 8.0;
     params.penalty_stiffness = 5.0e6;
@@ -147,6 +156,7 @@ inline SimulationParameters generateTestParameters() {
     params.instrument_sensitivity = 1.0;
     params.frequency = 1.0;
     params.decay_alpha = 0.5;
+    params.wave_model = EarthquakeWaveModel::SIMPLE_SINE;
     return params;
 }
 
