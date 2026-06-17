@@ -43,6 +43,10 @@ set(CORE_SOURCES
     src/mqtt_client.cpp
     src/network_localizer.cpp
     src/instrument_comparison.cpp
+    src/instrument_comparator.cpp
+    src/material_analyzer.cpp
+    src/vr_seismoscope.cpp
+    src/simulation_thread.cpp
 )
 
 add_library(didongyi_core STATIC ${CORE_SOURCES})

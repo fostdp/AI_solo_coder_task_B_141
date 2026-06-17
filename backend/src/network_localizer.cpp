@@ -4,8 +4,11 @@
 #include <cmath>
 #include <stdexcept>
 
-double deg2rad(double deg) { return deg * M_PI / 180.0; }
-double rad2deg(double rad) { return rad * 180.0 / M_PI; }
+namespace {
+    constexpr double PI = 3.14159265358979323846;
+    double deg2rad(double deg) { return deg * PI / 180.0; }
+    double rad2deg(double rad) { return rad * 180.0 / PI; }
+}
 
 std::string NetworkLocalizer::protocolName(TimeSyncProtocol proto) {
     switch (proto) {
@@ -350,11 +353,11 @@ LocalizationResult NetworkLocalizer::runTDOA(
             double d_i_lat = (haversineDistanceKm(it_i->latitude_deg, it_i->longitude_deg,
                                                      best_lat + 0.001, best_lon) - d_i) / 0.001;
             double d_i_lon = (haversineDistanceKm(it_i->latitude_deg, it_i->longitude_deg,
-                                                     best_lat, best_lon + dlon * 180 / M_PI) - d_i) / (dlon * 180 / M_PI);
+                                                     best_lat, best_lon + dlon * 180 / PI) - d_i) / (dlon * 180 / PI);
             double d_0_lat = (haversineDistanceKm(it_0->latitude_deg, it_0->longitude_deg,
                                                      best_lat + 0.001, best_lon) - d_0) / 0.001;
             double d_0_lon = (haversineDistanceKm(it_0->latitude_deg, it_0->longitude_deg,
-                                                     best_lat, best_lon + dlon * 180 / M_PI) - d_0) / (dlon * 180 / M_PI);
+                                                     best_lat, best_lon + dlon * 180 / PI) - d_0) / (dlon * 180 / PI);
 
             grad_lat += 2 * error * (d_i_lat - d_0_lat) / wave_velocity_km_sec;
             grad_lon += 2 * error * (d_i_lon - d_0_lon) / wave_velocity_km_sec;

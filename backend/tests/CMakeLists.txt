@@ -62,3 +62,25 @@ target_link_libraries(test_simulation_engine PRIVATE
     didongyi_core
 )
 gtest_discover_tests(test_simulation_engine)
+
+add_executable(test_vr_seismoscope
+    ${TEST_SOURCES_COMMON}
+    test_vr_seismoscope.cpp
+)
+target_link_libraries(test_vr_seismoscope PRIVATE
+    gtest_main
+    gmock
+    didongyi_core
+)
+gtest_discover_tests(test_vr_seismoscope)
+
+add_executable(test_simulation_thread
+    ${TEST_SOURCES_COMMON}
+    test_simulation_thread.cpp
+)
+target_link_libraries(test_simulation_thread PRIVATE
+    gtest_main
+    gmock
+    didongyi_core
+)
+gtest_discover_tests(test_simulation_thread)
