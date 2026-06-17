@@ -1,0 +1,104 @@
+{
+  "pillar": {
+    "mass_kg": 500,
+    "height_m": 2.0,
+    "damping_ratio": 0.05,
+    "limit_angle_deg": 8.0,
+    "trigger_angle_deg": 5.0
+  },
+  "contact": {
+    "penalty_stiffness": 5000000,
+    "penalty_damping": 1200,
+    "friction_coeff": 0.15
+  },
+  "numerical": {
+    "dt_sec": 0.001,
+    "duration_sec": 30.0,
+    "sample_interval": 30
+  },
+  "site_soil": {
+    "default_type": "II",
+    "amplification": {
+      "I0": 0.85,
+      "I1": 1.00,
+      "II": 1.25,
+      "III": 1.65,
+      "IV": 2.10
+    },
+    "frequency_tuning": {
+      "I0": 1.4,
+      "I1": 1.2,
+      "II": 1.0,
+      "III": 0.7,
+      "IV": 0.45
+    }
+  },
+  "materials": {
+    "copper": {
+      "density_kgm3": 8960,
+      "youngs_modulus_pa": 110000000000,
+      "yield_strength_pa": 70000000,
+      "damping_ratio": 0.05,
+      "poissons_ratio": 0.34,
+      "thermal_expansion": 0.0000165,
+      "cost_factor": 1.0,
+      "description": "青铜合金，张衡地动仪原材"
+    },
+    "iron": {
+      "density_kgm3": 7850,
+      "youngs_modulus_pa": 200000000000,
+      "yield_strength_pa": 240000000,
+      "damping_ratio": 0.02,
+      "poissons_ratio": 0.29,
+      "thermal_expansion": 0.0000118,
+      "cost_factor": 0.4,
+      "description": "熟铁/锻铁，强度较高"
+    },
+    "wood": {
+      "density_kgm3": 750,
+      "youngs_modulus_pa": 12000000000,
+      "yield_strength_pa": 50000000,
+      "damping_ratio": 0.08,
+      "poissons_ratio": 0.35,
+      "thermal_expansion": 0.000005,
+      "cost_factor": 0.08,
+      "description": "硬木（橡木/楠木），阻尼特性优异"
+    },
+    "steel": {
+      "density_kgm3": 7850,
+      "youngs_modulus_pa": 206000000000,
+      "yield_strength_pa": 350000000,
+      "damping_ratio": 0.005,
+      "poissons_ratio": 0.30,
+      "thermal_expansion": 0.0000115,
+      "cost_factor": 0.6,
+      "description": "现代结构钢材，高强度低阻尼"
+    }
+  },
+  "instruments": {
+    "didongyi": {
+      "sensitivity_factor": 1.0,
+      "response_lag_ms": 15,
+      "noise_floor_gal": 0.1,
+      "min_trigger_gal": 1.0,
+      "damping_override": 0.05,
+      "description": "东汉张衡候风地动仪，纯机械倒立摆"
+    },
+    "water_clock_armillary": {
+      "sensitivity_factor": 0.35,
+      "response_lag_ms": 80,
+      "noise_floor_gal": 0.5,
+      "min_trigger_gal": 8.0,
+      "damping_override": 0.15,
+      "description": "北宋苏颂水运仪象台，含大型水轮阻尼"
+    },
+    "modern_seismometer": {
+      "sensitivity_factor": 25.0,
+      "response_lag_ms": 1,
+      "noise_floor_gal": 0.001,
+      "min_trigger_gal": 0.01,
+      "damping_override": 0.005,
+      "description": "现代电子宽带地震仪，带前置放大"
+    }
+  }
+}
