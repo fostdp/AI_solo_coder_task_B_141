@@ -29,8 +29,7 @@ set(PROMETHEUS_INCLUDE "" CACHE PATH "Path to prometheus-cpp include directory")
 set(PROMETHEUS_CORE_LIB "" CACHE FILEPATH "Path to prometheus-cpp core library")
 set(PROMETHEUS_PULL_LIB "" CACHE FILEPATH "Path to prometheus-cpp pull library")
 
-add_executable(didongyi_backend
-    src/main.cpp
+set(CORE_SOURCES
     src/common/app_config.cpp
     src/common/logger_metrics.cpp
     src/modules/udp_receiver.cpp
@@ -46,7 +45,9 @@ add_executable(didongyi_backend
     src/instrument_comparison.cpp
 )
 
-target_include_directories(didongyi_backend PRIVATE
+add_library(didongyi_core STATIC ${CORE_SOURCES})
+
+target_include_directories(didongyi_core PUBLIC
     ${CMAKE_SOURCE_DIR}/include
     ${HTTPP_LIB_INCLUDE}
     ${NLOHMANN_JSON_INCLUDE}
@@ -57,13 +58,13 @@ target_include_directories(didongyi_backend PRIVATE
     ${PROMETHEUS_INCLUDE}
 )
 
-target_compile_definitions(didongyi_backend PRIVATE
+target_compile_definitions(didongyi_core PUBLIC
     SPDLOG_FMT_EXTERNAL
     SPDLOG_NO_EXCEPTIONS
     BOOST_BIND_GLOBAL_PLACEHOLDERS
 )
 
-target_link_libraries(didongyi_backend PRIVATE
+target_link_libraries(didongyi_core PUBLIC
     Threads::Threads
     mosquitto::mosquitto
     Boost::system
@@ -72,29 +73,32 @@ target_link_libraries(didongyi_backend PRIVATE
 )
 
 if(spdlog_FOUND)
-    target_link_libraries(didongyi_backend PRIVATE spdlog::spdlog)
+    target_link_libraries(didongyi_core PUBLIC spdlog::spdlog)
 else()
     if(SPDLOG_INCLUDE)
-        target_compile_definitions(didongyi_backend PRIVATE SPDLOG_HEADER_ONLY)
+        target_compile_definitions(didongyi_core PUBLIC SPDLOG_HEADER_ONLY)
     endif()
 endif()
 
 if(prometheus-cpp_FOUND)
-    target_link_libraries(didongyi_backend PRIVATE prometheus-cpp::core prometheus-cpp::pull)
+    target_link_libraries(didongyi_core PUBLIC prometheus-cpp::core prometheus-cpp::pull)
 else()
     if(PROMETHEUS_CORE_LIB)
-        target_link_libraries(didongyi_backend PRIVATE ${PROMETHEUS_CORE_LIB})
+        target_link_libraries(didongyi_core PUBLIC ${PROMETHEUS_CORE_LIB})
     endif()
     if(PROMETHEUS_PULL_LIB)
-        target_link_libraries(didongyi_backend PRIVATE ${PROMETHEUS_PULL_LIB})
+        target_link_libraries(didongyi_core PUBLIC ${PROMETHEUS_PULL_LIB})
     endif()
 endif()
 
 if(WIN32)
-    target_link_libraries(didongyi_backend PRIVATE ws2_32 crypt32 winmm)
+    target_link_libraries(didongyi_core PUBLIC ws2_32 crypt32 winmm)
 else()
-    target_link_libraries(didongyi_backend PRIVATE dl rt)
+    target_link_libraries(didongyi_core PUBLIC dl rt)
 endif()
+
+add_executable(didongyi_backend src/main.cpp)
+target_link_libraries(didongyi_backend PRIVATE didongyi_core)
 
 configure_file(config/dynamics.json ${CMAKE_BINARY_DIR}/config/dynamics.json COPYONLY)
 configure_file(config/seismic.json ${CMAKE_BINARY_DIR}/config/seismic.json COPYONLY)
@@ -103,3 +107,9 @@ file(COPY ${CMAKE_SOURCE_DIR}/config DESTINATION ${CMAKE_BINARY_DIR})
 
 install(TARGETS didongyi_backend DESTINATION bin)
 install(DIRECTORY config DESTINATION .)
+
+option(BUILD_TESTS "Build unit tests" ON)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

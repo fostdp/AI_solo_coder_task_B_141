@@ -1,0 +1,794 @@
+﻿
+ RUN  v4.1.9 D:/SOLO-2/AI_solo_coder_task_B_141
+
+ 鉂?src/__tests__/VirtualExperience.test.tsx (36 tests | 13 failed) 40961ms
+       脳 TC-N-5 闇囦腑璺濇粦鍧楋細label鍚€岃窛绂汇€?銆岄渿涓窛銆嶏紝榛樿100km 24ms
+       脳 TC-N-12 楂樼骇鍙傛暟鎶樺彔闈㈡澘锛氶粯璁ゅ叧闂紝鐐瑰嚮灞曞紑鍚庢樉绀烘敮鏌辫川閲?楂樺害/闃诲凹姣?40ms
+       脳 TC-N-13 鏁版嵁闈㈡澘锛氬疄鏃舵樉绀恒€屾憜鍔ㄨ搴︺€?銆岃閫熷害銆?銆岀姸鎬併€嶇瓑鏁欒偛鎬ф暟鍊?27ms
+       脳 TC-B-1 鏈€灏忛渿绾ц竟鐣岋細璁句负1.0绾э紙婊戝潡鏈€灏忓€硷級锛屾垚鍔熻缃?17ms
+       脳 TC-B-2 鏈€澶ч渿绾ц竟鐣岋細璁句负10.0绾э紙婊戝潡鏈€澶у€硷級锛屾垚鍔熻缃?20ms
+       脳 TC-E-1 閲嶅鐐瑰嚮瑙﹀彂锛氭挱鏀句腑(isPlaying=true)鐐硅Е鍙戞寜閽紝triggerEarthquake璋冪敤娆℃暟涓嶅鍔?5011ms
+       脳 TC-E-2 瑙﹀彂涓偣鍑伙細isTriggering=true鏃剁偣鍑昏Е鍙戞寜閽笉閲嶅璋冪敤 5004ms
+       脳 TC-E-4 閲嶇疆鍙栨秷鍔ㄧ敾锛氭挱鏀句腑鐐瑰嚮閲嶇疆锛屽仠姝㈠姩鐢伙紙鐘舵€佸浣嶅埌0锛?5006ms
+       脳 TC-E-5 鏈Е鍙戝湴闇囷紙灏忛渿绾э級锛歵riggered=false鐨勭粨鏋滆繑鍥烇紝涓嶈Е鍙戦摐鐞冿紝榫欓鐘舵€佷繚鎸佸叧闂?5010ms
+       脳 TC-E-6 瑙﹀彂鍔ㄧ敾锛氳繑鍥瀟riggered=true涓攄ragon_index=4锛堝崡锛夛紝榫欓4鍙樹负瑙﹀彂鎬侊紝閾滅悆涓嬭惤鍔ㄧ敾瑙﹀彂 5015ms
+       脳 TC-E-7 缁勪欢鍗歌浇娓呯悊锛氭寕杞解啋瑙﹀彂鈫掑嵏杞斤紝requestAnimationFrame琚玞ancel 5005ms
+       脳 TC-E-8 鏂逛綅鍒囨崲瑙﹀彂锛氬厛瑙﹀彂涓滄柟鍚戯紝鍒囨崲鍗楁柟鍚戝悗瑙﹀彂锛宒ragon_index瀵瑰簲鍗?5005ms
+       脳 TC-E-10 娉㈠舰娓叉煋鏁欒偛鎬э細杩斿洖trajectory闈炵┖鏁扮粍锛屾尝褰㈠尯濉厖闈為浂鏁版嵁 5008ms
+node : 
+所在位置 行:1 字符: 1
++ node .\node_modules\vitest\vitest.mjs run .\src\__tests__\VirtualExpe ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo              : NotSpecified: (:    String) [], RemoteExc    
+eption
+    + FullyQualifiedError    Id : NativeCommandErr    or
+ 
+鈳幆鈳幆鈳幆 Failed Tests 13 鈳幆鈳幆鈳幆鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗竴缁勶細姝ｅ父鍦烘櫙锛圢ormal锛? 浜や簰鏁欒偛鎬?> TC-N-5 闇囦腑璺濇粦鍧楋細label鍚€岃窛绂汇€?銆岄渿涓窛銆嶏紝榛樿100k
+m
+TestingLibraryElementError: Found multiple elements with the text: /闇囦腑璺潀璺濈/
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<span[39m
+  [33mclass[39m=[32m"text-bronze-300"[39m
+[36m>[39m
+  [0m闇囦腑璺?(km)[0m
+[36m</span>[39m
+
+Ignored nodes: comments, script, style
+[36m<span[39m
+  [33mclass[39m=[32m"text-bronze-400"[39m
+[36m>[39m
+  [0m闇囦腑璺?[0m
+[36m</span>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `que
+ryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"min-h-screen bg-starfield bg-ancient-grid bg-grid-s
+ize p-4 md:p-6"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"max-w-[1800px] mx-auto"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"text-center mb-6"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-3xl md:text-4xl lg:text-5xl font-serif f
+ont-bold text-gold-400 mb-3 text-shadow-glow"[39m
+          [36m>[39m
+            [0m鍊欓鍦板姩浠櫄鎷熶綋楠?[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-bronze-300 text-base md:text-lg max-w-3x
+l mx-auto"[39m
+          [36m>[39m
+            [0m浜叉墜瑙﹀彂鍦伴渿锛岃瀵熷崈骞寸鍣ㄧ殑绁炲鍝嶅簲 鈥斺€?鎺㈢储寮犺　鍦板姩浠殑绉戝濂ョ[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6"
+[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"lg:col-span-1 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-gauge w-4 h-4 text-gold-5
+00"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m12 14 4-4"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3.34 19a10 10 0 1 1 17.32 0"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span>[39m
+                  [0m鍦伴渿鍙傛暟[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囩骇 (M)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m5.5[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"10"[39m
+                    [33mmin[39m=[32m"1"[39m
+                    [33mstep[39m=[32m"0.1"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"5.5"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囦腑璺?(km)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m100[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"1000"[39m
+                    [33mmin[39m=[32m"10"[39m
+                    [33mstep[39m=[32m"10"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"100"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m鎸佺画鏃堕棿 (s)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m30[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"120"[39m
+                    [33mmin[39m=[32m"5"[39m
+                    [33mstep[39m=[32m"5"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"30"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-compass w-4 h-4 text-gold
+-500"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1
+.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33m...
+ 鉂?Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:1
+9
+ 鉂?getElementError node_modules/@testing-library/dom/dist/query-helpers.js:20:3
+5
+ 鉂?getMultipleElementsFoundError node_modules/@testing-library/dom/dist/query-h
+elpers.js:23:10
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 鉂?src/__tests__/VirtualExperience.test.tsx:182:36
+    180|       render(<VirtualExperience />)
+    181|
+    182|       const distanceLabel = screen.getByText(/闇囦腑璺潀璺濈/)
+       |                                    ^
+    183|       expect(distanceLabel).toBeInTheDocument()
+    184|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆1/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗竴缁勶細姝ｅ父鍦烘櫙锛圢ormal锛? 浜や簰鏁欒偛鎬?> TC-N-12 楂樼骇鍙傛暟鎶樺彔闈㈡澘锛氶粯璁ゅ叧闂紝鐐瑰嚮灞曞紑鍚庢樉绀烘敮鏌辫川閲?
+楂樺害/闃诲凹姣?TestingLibraryElementError: Unable to find an element with the text: 鏀
+煴璐ㄩ噺. This could be because the text is broken up by multiple elements. In thi
+s case, you can provide a function for your text matcher to make your matcher m
+ore flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"min-h-screen bg-starfield bg-ancient-grid bg-grid-s
+ize p-4 md:p-6"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"max-w-[1800px] mx-auto"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"text-center mb-6"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-3xl md:text-4xl lg:text-5xl font-serif f
+ont-bold text-gold-400 mb-3 text-shadow-glow"[39m
+          [36m>[39m
+            [0m鍊欓鍦板姩浠櫄鎷熶綋楠?[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-bronze-300 text-base md:text-lg max-w-3x
+l mx-auto"[39m
+          [36m>[39m
+            [0m浜叉墜瑙﹀彂鍦伴渿锛岃瀵熷崈骞寸鍣ㄧ殑绁炲鍝嶅簲 鈥斺€?鎺㈢储寮犺　鍦板姩浠殑绉戝濂ョ[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6"
+[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"lg:col-span-1 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-gauge w-4 h-4 text-gold-5
+00"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m12 14 4-4"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3.34 19a10 10 0 1 1 17.32 0"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span>[39m
+                  [0m鍦伴渿鍙傛暟[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囩骇 (M)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m5.5[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"10"[39m
+                    [33mmin[39m=[32m"1"[39m
+                    [33mstep[39m=[32m"0.1"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"5.5"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囦腑璺?(km)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m100[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"1000"[39m
+                    [33mmin[39m=[32m"10"[39m
+                    [33mstep[39m=[32m"10"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"100"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m鎸佺画鏃堕棿 (s)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m30[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"120"[39m
+                    [33mmin[39m=[32m"5"[39m
+                    [33mstep[39m=[32m"5"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"30"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-compass w-4 h-4 text-gold
+-500"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1
+.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33m...
+ 鉂?Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:1
+9
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 鉂?src/__tests__/VirtualExperience.test.tsx:306:21
+    304|       fireEvent.click(advancedBtns[0])
+    305|
+    306|       expect(screen.getByText('鏀煴璐ㄩ噺')).toBeInTheDocument()
+       |                     ^
+    307|       expect(screen.getByText('鏀煴楂樺害')).toBeInTheDocument()
+    308|       expect(screen.getByText('闃诲凹姣?)).toBeInTheDocument()
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆2/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗竴缁勶細姝ｅ父鍦烘櫙锛圢ormal锛? 浜や簰鏁欒偛鎬?> TC-N-13 鏁版嵁闈㈡澘锛氬疄鏃舵樉绀恒€屾憜鍔ㄨ搴︺€?銆岃閫熷害銆?銆岀姸鎬併€
+嶇瓑鏁欒偛鎬ф暟鍊?TestingLibraryElementError: Found multiple elements with the text: 瑙﹀
+彂鐘舵€?
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+[36m<span>[39m
+  [0m瑙﹀彂鐘舵€?[0m
+[36m</span>[39m
+
+Ignored nodes: comments, script, style
+[36m<div[39m
+  [33mclass[39m=[32m"text-xs text-bronze-400"[39m
+[36m>[39m
+  [0m瑙﹀彂鐘舵€?[0m
+[36m</div>[39m
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `que
+ryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"min-h-screen bg-starfield bg-ancient-grid bg-grid-s
+ize p-4 md:p-6"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"max-w-[1800px] mx-auto"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"text-center mb-6"[39m
+        [36m>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"text-3xl md:text-4xl lg:text-5xl font-serif f
+ont-bold text-gold-400 mb-3 text-shadow-glow"[39m
+          [36m>[39m
+            [0m鍊欓鍦板姩浠櫄鎷熶綋楠?[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-bronze-300 text-base md:text-lg max-w-3x
+l mx-auto"[39m
+          [36m>[39m
+            [0m浜叉墜瑙﹀彂鍦伴渿锛岃瀵熷崈骞寸鍣ㄧ殑绁炲鍝嶅簲 鈥斺€?鎺㈢储寮犺　鍦板姩浠殑绉戝濂ョ[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6"
+[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"lg:col-span-1 space-y-4"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-gauge w-4 h-4 text-gold-5
+00"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m12 14 4-4"[39m
+                  [36m/>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"M3.34 19a10 10 0 1 1 17.32 0"[39m
+                  [36m/>[39m
+                [36m</svg>[39m
+                [36m<span>[39m
+                  [0m鍦伴渿鍙傛暟[0m
+                [36m</span>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"space-y-4"[39m
+              [36m>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囩骇 (M)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m5.5[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"10"[39m
+                    [33mmin[39m=[32m"1"[39m
+                    [33mstep[39m=[32m"0.1"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"5.5"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m闇囦腑璺?(km)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m100[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"1000"[39m
+                    [33mmin[39m=[32m"10"[39m
+                    [33mstep[39m=[32m"10"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"100"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+                [36m<div>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"flex justify-between text-xs mb-1"[3
+9m
+                  [36m>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"text-bronze-300"[39m
+                    [36m>[39m
+                      [0m鎸佺画鏃堕棿 (s)[0m
+                    [36m</span>[39m
+                    [36m<span[39m
+                      [33mclass[39m=[32m"font-mono text-gold-400"[39m
+                    [36m>[39m
+                      [0m30[0m
+                    [36m</span>[39m
+                  [36m</div>[39m
+                  [36m<input[39m
+                    [33mclass[39m=[32m"w-full accent-gold-500"[39m
+                    [33mmax[39m=[32m"120"[39m
+                    [33mmin[39m=[32m"5"[39m
+                    [33mstep[39m=[32m"5"[39m
+                    [33mtype[39m=[32m"range"[39m
+                    [33mvalue[39m=[32m"30"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"bronze-panel p-4"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-heading"[39m
+              [36m>[39m
+                [36m<svg[39m
+                  [33maria-hidden[39m=[32m"true"[39m
+                  [33mclass[39m=[32m"lucide lucide-compass w-4 h-4 text-gold
+-500"[39m
+                  [33mfill[39m=[32m"none"[39m
+                  [33mheight[39m=[32m"24"[39m
+                  [33mstroke[39m=[32m"currentColor"[39m
+                  [33mstroke-linecap[39m=[32m"round"[39m
+                  [33mstroke-linejoin[39m=[32m"round"[39m
+                  [33mstroke-width[39m=[32m"2"[39m
+                  [33mviewBox[39m=[32m"0 0 24 24"[39m
+                  [33mwidth[39m=[32m"24"[39m
+                  [33mxmlns[39m=[32m"http://www.w3.org/2000/svg"[39m
+                [36m>[39m
+                  [36m<path[39m
+                    [33md[39m=[32m"m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1
+.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"[39m
+                  [36m/>[39m
+                  [36m<circle[39m
+                    [33m...
+ 鉂?Object.getElementError node_modules/@testing-library/dom/dist/config.js:37:1
+9
+ 鉂?getElementError node_modules/@testing-library/dom/dist/query-helpers.js:20:3
+5
+ 鉂?getMultipleElementsFoundError node_modules/@testing-library/dom/dist/query-h
+elpers.js:23:10
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ 鉂?node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 鉂?src/__tests__/VirtualExperience.test.tsx:318:21
+    316|       expect(screen.getByText('閮芥煴鎽嗗姩瑙掑害')).toBeInTheDocument()
+    317|       expect(screen.getByText('瑙掗€熷害')).toBeInTheDocument()
+    318|       expect(screen.getByText('瑙﹀彂鐘舵€?)).toBeInTheDocument()
+       |                     ^
+    319|
+    320|       const angleValues = screen.getAllByText(/掳/)
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆3/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗簩缁勶細杈圭晫鍦烘櫙锛圔oundary锛? 浜や簰杈圭晫娴嬭瘯 > TC-B-1 鏈€灏忛渿绾ц竟鐣岋細璁句负1.0绾э紙婊戝潡鏈€灏忓€硷級锛屾垚鍔熻
+缃?AssertionError: expected '1' to be '1.0' // Object.is equality
+
+Expected: "1.0"
+Received: "1"
+
+ 鉂?src/__tests__/VirtualExperience.test.tsx:343:37
+    341|
+    342|       fireEvent.change(magnitudeSlider, { target: { value: '1.0' } })
+    343|       expect(magnitudeSlider.value).toBe('1.0')
+       |                                     ^
+    344|       expect(screen.getByText('1.0')).toBeInTheDocument()
+    345|     })
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆4/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗簩缁勶細杈圭晫鍦烘櫙锛圔oundary锛? 浜や簰杈圭晫娴嬭瘯 > TC-B-2 鏈€澶ч渿绾ц竟鐣岋細璁句负10.0绾э紙婊戝潡鏈€澶у€硷級锛屾垚鍔
+熻缃?AssertionError: expected '10' to be '10.0' // Object.is equality
+
+Expected: "10.0"
+Received: "10"
+
+ 鉂?src/__tests__/VirtualExperience.test.tsx:356:37
+    354|
+    355|       fireEvent.change(magnitudeSlider, { target: { value: '10.0' } })
+    356|       expect(magnitudeSlider.value).toBe('10.0')
+       |                                     ^
+    357|       expect(screen.getByText('10.0')).toBeInTheDocument()
+    358|     })
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆5/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-1 閲嶅鐐瑰嚮瑙﹀彂锛氭挱鏀句腑(isPlaying=true)鐐硅Е
+鍙戞寜閽紝triggerEarthquake璋冪敤娆℃暟涓嶅鍔?Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:525:5
+    523|
+    524|   describe('绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?, () => {
+    525|     it('TC-E-1 閲嶅鐐瑰嚮瑙﹀彂锛氭挱鏀句腑(isPlaying=true)鐐硅Е鍙戞寜閽紝triggerEarthqua
+ke璋冪敤娆℃暟涓嶅鈥?       |     ^
+    526|       vi.useFakeTimers()
+    527|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆6/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-2 瑙﹀彂涓偣鍑伙細isTriggering=true鏃剁偣鍑昏Е鍙戞
+寜閽笉閲嶅璋冪敤
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:546:5
+    544|     })
+    545|
+    546|     it('TC-E-2 瑙﹀彂涓偣鍑伙細isTriggering=true鏃剁偣鍑昏Е鍙戞寜閽笉閲嶅璋冪敤', async ()
+ => {
+       |     ^
+    547|       vi.useFakeTimers()
+    548|       let resolveTrigger: (v: EarthquakeTriggerResult) => void
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆7/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-4 閲嶇疆鍙栨秷鍔ㄧ敾锛氭挱鏀句腑鐐瑰嚮閲嶇疆锛屽仠姝㈠姩鐢伙紙鐘舵€佸
+浣嶅埌0锛?Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:607:5
+    605|     })
+    606|
+    607|     it('TC-E-4 閲嶇疆鍙栨秷鍔ㄧ敾锛氭挱鏀句腑鐐瑰嚮閲嶇疆锛屽仠姝㈠姩鐢伙紙鐘舵€佸浣嶅埌0锛?, async () => 
+{
+       |     ^
+    608|       vi.useFakeTimers()
+    609|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆8/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-5 鏈Е鍙戝湴闇囷紙灏忛渿绾э級锛歵riggered=false鐨勭粨
+鏋滆繑鍥烇紝涓嶈Е鍙戦摐鐞冿紝榫欓鐘舵€佷繚鎸佸叧闂?Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:650:5
+    648|     })
+    649|
+    650|     it('TC-E-5 鏈Е鍙戝湴闇囷紙灏忛渿绾э級锛歵riggered=false鐨勭粨鏋滆繑鍥烇紝涓嶈Е鍙戦摐鐞冿紝榫欓鐘舵€
+佷繚鎸佸叧闂?, async 鈥?       |     ^
+    651|       vi.useFakeTimers()
+    652|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳痆9/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-6 瑙﹀彂鍔ㄧ敾锛氳繑鍥瀟riggered=true涓攄ragon_in
+dex=4锛堝崡锛夛紝榫欓4鍙樹负瑙﹀彂鎬侊紝閾滅悆涓嬭惤鍔ㄧ敾瑙﹀彂
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:687:5
+    685|     })
+    686|
+
+ Test Files  1 failed (1)
+      Tests  13 failed | 23 passed (36)
+   Start at  17:07:06
+   Duration  42.35s (transform 234ms, setup 197ms, import 264ms, tests 40.96s, environment 752ms)
+
+    687|     it('TC-E-6 瑙﹀彂鍔ㄧ敾锛氳繑鍥瀟riggered=true涓攄ragon_index=4锛堝崡锛夛紝榫欓4鍙樹负瑙﹀彂
+鎬侊紝閾滅悆涓嬭惤鍔ㄧ敾鈥?       |     ^
+    688|       vi.useFakeTimers()
+    689|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆[10/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-7 缁勪欢鍗歌浇娓呯悊锛氭寕杞解啋瑙﹀彂鈫掑嵏杞斤紝requestAni
+mationFrame琚玞ancel
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:731:5
+    729|     })
+    730|
+    731|     it('TC-E-7 缁勪欢鍗歌浇娓呯悊锛氭寕杞解啋瑙﹀彂鈫掑嵏杞斤紝requestAnimationFrame琚玞ancel', 
+async ()鈥?       |     ^
+    732|       vi.useFakeTimers()
+    733|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆[11/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-8 鏂逛綅鍒囨崲瑙﹀彂锛氬厛瑙﹀彂涓滄柟鍚戯紝鍒囨崲鍗楁柟鍚戝悗瑙﹀彂锛
+宒ragon_index瀵瑰簲鍗?Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:767:5
+    765|     })
+    766|
+    767|     it('TC-E-8 鏂逛綅鍒囨崲瑙﹀彂锛氬厛瑙﹀彂涓滄柟鍚戯紝鍒囨崲鍗楁柟鍚戝悗瑙﹀彂锛宒ragon_index瀵瑰簲鍗?, as
+ync () => {
+       |     ^
+    768|       vi.useFakeTimers()
+    769|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆[12/13]鈳?
+ FAIL  src/__tests__/VirtualExperience.test.tsx > VirtualExperience 铏氭嫙浣撻獙椤甸潰 >
+ 绗笁缁勶細寮傚父鍦烘櫙锛圗xception锛? 椴佹鎬?鏁欒偛鎬?> TC-E-10 娉㈠舰娓叉煋鏁欒偛鎬э細杩斿洖trajectory闈炵┖鏁扮粍锛屾
+尝褰㈠尯濉厖闈為浂鏁版嵁
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or co
+nfigure it globally with "testTimeout".
+ 鉂?src/__tests__/VirtualExperience.test.tsx:886:5
+    884|     })
+    885|
+    886|     it('TC-E-10 娉㈠舰娓叉煋鏁欒偛鎬э細杩斿洖trajectory闈炵┖鏁扮粍锛屾尝褰㈠尯濉厖闈為浂鏁版嵁', async
+ () => {
+       |     ^
+    887|       vi.useFakeTimers()
+    888|
+
+鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆鈳幆[13/13]鈳?
